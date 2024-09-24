@@ -12,6 +12,8 @@ from realesrgan.archs.srvgg_arch import SRVGGNetCompact
 def main():
     """Inference demo for Real-ESRGAN.
     """
+    # global netscale,model,file_url,args
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--input', type=str, default='inputs', help='Input image or folder')
     parser.add_argument(
@@ -53,9 +55,9 @@ def main():
         '-g', '--gpu-id', type=int, default=None, help='gpu device to use (default=None) can be 0,1,2 for multi-gpu')
 
     args = parser.parse_args()
-
     # determine models according to model names
     args.model_name = args.model_name.split('.')[0]
+
     if args.model_name == 'RealESRGAN_x4plus':  # x4 RRDBNet model
         model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=4)
         netscale = 4
@@ -86,10 +88,10 @@ def main():
 
     # determine model paths
    # determine model paths
-if args.model_path is not None:
-    model_path = args.model_path
-else:
-    model_path = os.path.join('path_to_your_model_directory', '4x-UltraSharp.pth')  # Modify this path accordingly
+    if args.model_path is not None:
+        model_path = args.model_path
+    else:
+        model_path = os.path.join('path_to_your_model_directory', '4x-UltraSharp.pth')  # Modify this path accordingly
 
 
     # use dni to control the denoise strength
